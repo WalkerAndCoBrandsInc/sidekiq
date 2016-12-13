@@ -12,7 +12,9 @@ module Sidekiq
   class Web < Sinatra::Base
     include Sidekiq::Paginator
 
-    enable :sessions
+    # Disable this since Goatee creates its own sessions. If we have this here,
+    # then the 2 sessions conflict.
+    #enable :sessions
     use ::Rack::Protection, :use => :authenticity_token unless ENV['RACK_ENV'] == 'test'
 
     set :root, File.expand_path(File.dirname(__FILE__) + "/../../web")
